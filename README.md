@@ -157,6 +157,12 @@ config
 
 Install Python 3.12 and `uv`.
 
+Enable the pre-commit hook once per clone. It runs Ruff and Pyright before each commit:
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ### Backend
 
 Run Python commands from `backend/`:
