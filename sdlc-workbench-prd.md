@@ -873,12 +873,12 @@ Setup tasks:
 
 Project tasks:
 
-- [ ] 1.3 Add `sqlalchemy[asyncio]`; async engine, session and `get_session` dependency
-- [ ] 1.4 `Base` and `Project` ORM model with UUID key
-- [ ] 1.5 Alembic async init and migration `0001`: `projects`
-- [ ] 1.6 Use cases: create, list and get project
-- [ ] 1.7 `ProjectCreate` and `ProjectOut` schemas; routes `POST /projects`, `GET /projects`, `GET /projects/{id}`
-- [ ] 1.8 `NotFoundError` mapped to 404
+- [x] 1.3 Add `sqlalchemy[asyncio]`; async engine, session and `get_session` dependency
+- [x] 1.4 `Base` and `Project` ORM model with UUID key
+- [x] 1.5 Alembic async init and migration `0001`: `projects`
+- [x] 1.6 Use cases: create, list and get project
+- [x] 1.7 `ProjectCreate` and `ProjectOut` schemas; routes `POST /projects`, `GET /projects`, `GET /projects/{id}`
+- [x] 1.8 `NotFoundError` mapped to 404
 - [ ] 1.9 Add dev `pytest-asyncio`; test database, client fixture and project API tests
 
 Work item tasks:
@@ -891,15 +891,15 @@ Work item tasks:
 
 Setup acceptance:
 
-- [ ] AC1.1 API starts and `/health` returns 200.
-- [ ] AC1.2 Settings load `DATABASE_URL` from `.env`.
+- [x] AC1.1 API starts and `/health` returns 200.
+- [x] AC1.2 Settings load `DATABASE_URL` from `.env`.
 
 Project acceptance (after 1.9):
 
-- [ ] AC1.3 `alembic upgrade head` creates `projects` on the compose Postgres.
-- [ ] AC1.4 A project can be created, listed and read.
-- [ ] AC1.5 An empty project name returns 422.
-- [ ] AC1.6 An unknown project returns 404.
+- [x] AC1.3 `alembic upgrade head` creates `projects` on the compose Postgres.
+- [x] AC1.4 A project can be created, listed and read.
+- [x] AC1.5 An empty project name returns 422.
+- [x] AC1.6 An unknown project returns 404.
 
 Work item acceptance (after 1.14):
 
