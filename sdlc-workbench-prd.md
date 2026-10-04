@@ -883,8 +883,8 @@ Project tasks:
 
 Work item tasks:
 
-- [ ] 1.10 `Stage` and `WorkItemStatus` enums
-- [ ] 1.11 `WorkItem` ORM model and migration `0002`: `work_items`
+- [x] 1.10 `Stage` and `WorkItemStatus` enums
+- [x] 1.11 `WorkItem` ORM model and migration `0002`: `work_items`
 - [ ] 1.12 Use cases: create, list and get work item
 - [ ] 1.13 `WorkItemCreate` and `WorkItemOut` schemas; routes `POST /projects/{id}/work-items`, `GET /projects/{id}/work-items`, `GET /work-items/{id}`
 - [ ] 1.14 Work item API tests
@@ -903,7 +903,7 @@ Project acceptance (after 1.9):
 
 Work item acceptance (after 1.14):
 
-- [ ] AC1.7 `alembic upgrade head` creates `work_items`.
+- [x] AC1.7 `alembic upgrade head` creates `work_items`.
 - [ ] AC1.8 A work item can be created, listed and read.
 - [ ] AC1.9 A new work item starts in `RESEARCH` with status `ACTIVE`.
 - [ ] AC1.10 An unknown work item, or a work item in an unknown project, returns 404.
