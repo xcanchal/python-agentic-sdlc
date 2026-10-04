@@ -879,7 +879,7 @@ Project tasks:
 - [x] 1.6 Use cases: create, list and get project
 - [x] 1.7 `ProjectCreate` and `ProjectOut` schemas; routes `POST /projects`, `GET /projects`, `GET /projects/{id}`
 - [x] 1.8 `NotFoundError` mapped to 404
-- [ ] 1.9 Add dev `pytest-asyncio`; test database, client fixture and project API tests
+- [x] 1.9 Add dev `pytest-asyncio`; test database, client fixture and project API tests
 
 Work item tasks:
 
