@@ -272,12 +272,13 @@ Do not add more statuses until a real use case requires them.
 
 ```text
 id
-work_item_id
 stage_run_id
 kind
 content
 created_at
 ```
+
+An artifact belongs to its run, and the run belongs to a work item. Do not store `work_item_id` on the artifact: join through `stage_runs` to find the artifacts of a work item.
 
 Artifact kinds:
 
@@ -673,7 +674,7 @@ Request and response shapes:
 Project   = { id, name, created_at }
 WorkItem  = { id, project_id, title, description, current_stage, status, created_at, updated_at }
 StageRun  = { id, work_item_id, stage, model, status, error, input_tokens, output_tokens, cost_usd, created_at, completed_at, artifacts: Artifact[] }
-Artifact  = { id, work_item_id, stage_run_id, kind, content, created_at }
+Artifact  = { id, stage_run_id, kind, content, created_at }
 ```
 
 Optional after the first vertical slice:
@@ -847,7 +848,7 @@ Tasks are numbered `<iteration>.<n>` and acceptance criteria `AC<iteration>.<n>`
 | # | Iteration | Delivers | Status |
 | --- | --- | --- | --- |
 | 1 | Backend skeleton | projects API, then work items API | done |
-| 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | not started |
+| 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | in progress |
 | 3 | Research agent | `POST /run` for Research | not started |
 | 4 | Approval and transition | `POST /advance` for Research → Definition | not started |
 | 5 | Minimal React UI | Research slice in the browser | not started |
@@ -912,17 +913,17 @@ Work item acceptance (after 1.14):
 
 Tasks:
 
-- [ ] 2.1 `ArtifactKind` and `StageRunStatus` enums
-- [ ] 2.2 `StageRun` model with `error` field
-- [ ] 2.3 `Artifact` model linked to work item and run
-- [ ] 2.4 Migration `0003`
+- [x] 2.1 `ArtifactKind` and `StageRunStatus` enums
+- [x] 2.2 `StageRun` model with `error` field
+- [x] 2.3 `Artifact` model linked to its run
+- [x] 2.4 Migration `0003`
 - [ ] 2.5 Persistence tests
 
 Acceptance:
 
-- [ ] AC2.1 A stage run can be stored.
+- [x] AC2.1 A stage run can be stored.
 - [ ] AC2.2 A run can have multiple artifacts.
-- [ ] AC2.3 Artifacts are linked to the correct work item and run.
+- [ ] AC2.3 Artifacts are linked to the correct run, and through it to the correct work item.
 
 ### Iteration 3 — Research agent vertical slice
 

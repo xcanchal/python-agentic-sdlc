@@ -6,7 +6,7 @@ from sqlalchemy import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from agentic_sdlc.config.settings import settings
-from agentic_sdlc.infrastructure.database.models import Base, Project
+from agentic_sdlc.infrastructure.database.models import Base, Project, WorkItem
 from agentic_sdlc.infrastructure.database.session import get_session
 from agentic_sdlc.main import app
 
@@ -45,3 +45,11 @@ async def project(session: AsyncSession) -> Project:
     session.add(project)
     await session.commit()
     return project
+
+
+@pytest.fixture
+async def work_item(session: AsyncSession, project: Project) -> WorkItem:
+    work_item = WorkItem(project_id=project.id, title="Test", description="Details")
+    session.add(work_item)
+    await session.commit()
+    return work_item

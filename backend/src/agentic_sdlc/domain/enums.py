@@ -13,3 +13,22 @@ class Stage(StrEnum):
 class WorkItemStatus(StrEnum):
     ACTIVE = "ACTIVE"
     DONE = "DONE"
+
+
+class StageRunStatus(StrEnum):
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+
+
+class ArtifactKind(StrEnum):
+    RESEARCH_BRIEF = "RESEARCH_BRIEF"
+    PRD = "PRD"
+    ACCEPTANCE_CRITERIA = "ACCEPTANCE_CRITERIA"
+    TECH_DESIGN = "TECH_DESIGN"
+    ADR = "ADR"
+    UX_SPEC = "UX_SPEC"
+    WIREFRAME = "WIREFRAME"
+    IMPLEMENTATION = "IMPLEMENTATION"
+    TEST_CASES = "TEST_CASES"
+    VERIFICATION_REPORT = "VERIFICATION_REPORT"
