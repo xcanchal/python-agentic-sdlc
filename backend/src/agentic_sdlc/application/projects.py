@@ -22,7 +22,7 @@ async def list_projects(session: AsyncSession) -> Sequence[Project]:
     return result.all()
 
 
-async def get_project(session: AsyncSession, project_id: uuid.UUID) -> Project | None:
+async def get_project(session: AsyncSession, project_id: uuid.UUID) -> Project:
     result = await session.get(Project, project_id)
     if result is None:
         raise NotFoundError("Project not found")
