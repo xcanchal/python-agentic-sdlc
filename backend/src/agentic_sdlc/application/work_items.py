@@ -25,6 +25,8 @@ async def create_work_item(
 async def list_work_items(
     session: AsyncSession, project_id: uuid.UUID
 ) -> Sequence[WorkItem]:
+    await get_project(session, project_id)
+
     result = await session.scalars(
         sa.select(WorkItem)
         .where(WorkItem.project_id == project_id)
@@ -37,5 +39,5 @@ async def list_work_items(
 async def get_work_item(session: AsyncSession, work_item_id: uuid.UUID) -> WorkItem:
     result = await session.get(WorkItem, work_item_id)
     if result is None:
-        raise NotFoundError("WorkItem not found")
+        raise NotFoundError("Work item not found")
     return result

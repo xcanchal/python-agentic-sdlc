@@ -19,8 +19,8 @@ async def list_projects(
 
 @projects_router.post("", status_code=status.HTTP_201_CREATED)
 async def create_project(
-    body: ProjectCreateRequest,
     session: SessionDependency,
+    body: ProjectCreateRequest,
 ) -> ProjectResponse:
     project = await projects.create_project(session, body.name)
     return ProjectResponse.model_validate(project)
@@ -28,8 +28,8 @@ async def create_project(
 
 @projects_router.get("/{project_id}")
 async def get_project(
-    project_id: uuid.UUID,
     session: SessionDependency,
+    project_id: uuid.UUID,
 ) -> ProjectResponse:
     project = await projects.get_project(session, project_id)
     return ProjectResponse.model_validate(project)

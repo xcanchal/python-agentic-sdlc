@@ -846,7 +846,7 @@ Tasks are numbered `<iteration>.<n>` and acceptance criteria `AC<iteration>.<n>`
 
 | # | Iteration | Delivers | Status |
 | --- | --- | --- | --- |
-| 1 | Backend skeleton | projects API, then work items API | in progress |
+| 1 | Backend skeleton | projects API, then work items API | done |
 | 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | not started |
 | 3 | Research agent | `POST /run` for Research | not started |
 | 4 | Approval and transition | `POST /advance` for Research → Definition | not started |
@@ -885,9 +885,9 @@ Work item tasks:
 
 - [x] 1.10 `Stage` and `WorkItemStatus` enums
 - [x] 1.11 `WorkItem` ORM model and migration `0002`: `work_items`
-- [ ] 1.12 Use cases: create, list and get work item
-- [ ] 1.13 `WorkItemCreate` and `WorkItemOut` schemas; routes `POST /projects/{id}/work-items`, `GET /projects/{id}/work-items`, `GET /work-items/{id}`
-- [ ] 1.14 Work item API tests
+- [x] 1.12 Use cases: create, list and get work item
+- [x] 1.13 `WorkItemCreate` and `WorkItemOut` schemas; routes `POST /projects/{id}/work-items`, `GET /projects/{id}/work-items`, `GET /work-items/{id}`
+- [x] 1.14 Work item API tests
 
 Setup acceptance:
 
@@ -904,9 +904,9 @@ Project acceptance (after 1.9):
 Work item acceptance (after 1.14):
 
 - [x] AC1.7 `alembic upgrade head` creates `work_items`.
-- [ ] AC1.8 A work item can be created, listed and read.
-- [ ] AC1.9 A new work item starts in `RESEARCH` with status `ACTIVE`.
-- [ ] AC1.10 An unknown work item, or a work item in an unknown project, returns 404.
+- [x] AC1.8 A work item can be created, listed and read.
+- [x] AC1.9 A new work item starts in `RESEARCH` with status `ACTIVE`.
+- [x] AC1.10 An unknown work item, or a work item in an unknown project, returns 404.
 
 ### Iteration 2 — Artifacts and stage runs
 

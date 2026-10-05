@@ -6,7 +6,7 @@ from sqlalchemy import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from agentic_sdlc.config.settings import settings
-from agentic_sdlc.infrastructure.database.models import Base
+from agentic_sdlc.infrastructure.database.models import Base, Project
 from agentic_sdlc.infrastructure.database.session import get_session
 from agentic_sdlc.main import app
 
@@ -37,3 +37,11 @@ async def client(session: AsyncSession) -> AsyncIterator[AsyncClient]:
     ) as client:
         yield client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+async def project(session: AsyncSession) -> Project:
+    project = Project(name="Test Project")
+    session.add(project)
+    await session.commit()
+    return project

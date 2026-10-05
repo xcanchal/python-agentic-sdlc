@@ -2,11 +2,13 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from agentic_sdlc.api.routes.projects import projects_router
+from agentic_sdlc.api.routes.work_items import work_items_router
 from agentic_sdlc.application.errors import NotFoundError
 
 app = FastAPI(title="Agentic SDLC")
 
 app.include_router(projects_router)
+app.include_router(work_items_router)
 
 
 @app.get("/health")

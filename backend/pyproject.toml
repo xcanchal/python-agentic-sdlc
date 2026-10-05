@@ -35,3 +35,6 @@ asyncio_mode = "auto"
 
 [tool.ruff]
 src = ["src"]
+
+[tool.ruff.lint]
+extend-select = ["ANN001"]
