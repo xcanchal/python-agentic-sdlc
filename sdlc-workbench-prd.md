@@ -922,7 +922,7 @@ Tasks:
 Acceptance:
 
 - [x] AC2.1 A stage run can be stored.
-- [ ] AC2.2 A run can have multiple artifacts.
+- [x] AC2.2 A run can have multiple artifacts.
 - [ ] AC2.3 Artifacts are linked to the correct run, and through it to the correct work item.
 
 ### Iteration 3 — Research agent vertical slice

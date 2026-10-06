@@ -6,7 +6,13 @@ from sqlalchemy import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from agentic_sdlc.config.settings import settings
-from agentic_sdlc.infrastructure.database.models import Base, Project, WorkItem
+from agentic_sdlc.domain.enums import Stage
+from agentic_sdlc.infrastructure.database.models import (
+    Base,
+    Project,
+    StageRun,
+    WorkItem,
+)
 from agentic_sdlc.infrastructure.database.session import get_session
 from agentic_sdlc.main import app
 
@@ -53,3 +59,11 @@ async def work_item(session: AsyncSession, project: Project) -> WorkItem:
     session.add(work_item)
     await session.commit()
     return work_item
+
+
+@pytest.fixture
+async def stage_run(session: AsyncSession, work_item: WorkItem) -> StageRun:
+    run = StageRun(work_item_id=work_item.id, stage=Stage.RESEARCH, model="test-model")
+    session.add(run)
+    await session.commit()
+    return run

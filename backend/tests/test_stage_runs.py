@@ -3,8 +3,8 @@ from datetime import UTC, datetime
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from agentic_sdlc.domain.enums import Stage, StageRunStatus
-from agentic_sdlc.infrastructure.database.models import StageRun, WorkItem
+from agentic_sdlc.domain.enums import ArtifactKind, Stage, StageRunStatus
+from agentic_sdlc.infrastructure.database.models import Artifact, StageRun, WorkItem
 
 
 class TestStageRun:
@@ -73,9 +73,35 @@ class TestStageRun:
 
 class TestArtifact:
     async def test_run_has_several_artifacts(
-        self, session: AsyncSession, work_item: WorkItem
+        self, session: AsyncSession, stage_run: StageRun
     ) -> None:
-        pass
+        artifact_1 = Artifact(
+            stage_run_id=stage_run.id,
+            kind=ArtifactKind.PRD,
+            content="This is a PRD artifact",
+        )
+        artifact_2 = Artifact(
+            stage_run_id=stage_run.id,
+            kind=ArtifactKind.ACCEPTANCE_CRITERIA,
+            content="This is an AC artifact",
+        )
+        session.add_all([artifact_1, artifact_2])
+
+        await session.commit()
+        run_id = stage_run.id
+        session.expire_all()
+
+        stored_artifacts = (
+            await session.scalars(
+                sa.select(Artifact).where(Artifact.stage_run_id == run_id)
+            )
+        ).all()
+
+        assert len(stored_artifacts) == 2
+        assert {(a.kind, a.content) for a in stored_artifacts} == {
+            (ArtifactKind.PRD, "This is a PRD artifact"),
+            (ArtifactKind.ACCEPTANCE_CRITERIA, "This is an AC artifact"),
+        }
 
     async def test_artifacts_link_the_right_work_item(
         self, session: AsyncSession, work_item: WorkItem
