@@ -104,11 +104,60 @@ class TestArtifact:
         }
 
     async def test_artifacts_link_the_right_work_item(
-        self, session: AsyncSession, work_item: WorkItem
+        self, session: AsyncSession, work_item: WorkItem, stage_run: StageRun
     ) -> None:
-        pass
+        other_work_item = WorkItem(
+            project_id=work_item.project_id, title="Other", description="Details"
+        )
+        session.add(other_work_item)
+        await session.commit()
+        other_run = StageRun(
+            work_item_id=other_work_item.id, stage=Stage.RESEARCH, model="test-model"
+        )
+        session.add(other_run)
+        await session.commit()
+        session.add_all(
+            [
+                Artifact(
+                    stage_run_id=stage_run.id,
+                    kind=ArtifactKind.RESEARCH_BRIEF,
+                    content="Brief for this work item",
+                ),
+                Artifact(
+                    stage_run_id=other_run.id,
+                    kind=ArtifactKind.RESEARCH_BRIEF,
+                    content="Brief for the other work item",
+                ),
+            ]
+        )
+        await session.commit()
+
+        stored_artifacts = (
+            await session.scalars(
+                sa.select(Artifact)
+                .join(StageRun, Artifact.stage_run_id == StageRun.id)
+                .where(StageRun.work_item_id == work_item.id)
+            )
+        ).all()
+
+        assert [(a.stage_run_id, a.content) for a in stored_artifacts] == [
+            (stage_run.id, "Brief for this work item")
+        ]
 
     async def test_deleting_run_deletes_artifacts(
-        self, session: AsyncSession, work_item: WorkItem
+        self, session: AsyncSession, stage_run: StageRun
     ) -> None:
-        pass
+        session.add(
+            Artifact(
+                stage_run_id=stage_run.id,
+                kind=ArtifactKind.RESEARCH_BRIEF,
+                content="Brief",
+            )
+        )
+        await session.commit()
+
+        await session.delete(stage_run)
+        await session.commit()
+
+        remaining_artifacts = (await session.scalars(sa.select(Artifact))).all()
+        assert remaining_artifacts == []
