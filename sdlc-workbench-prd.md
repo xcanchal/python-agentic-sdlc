@@ -848,7 +848,7 @@ Tasks are numbered `<iteration>.<n>` and acceptance criteria `AC<iteration>.<n>`
 | # | Iteration | Delivers | Status |
 | --- | --- | --- | --- |
 | 1 | Backend skeleton | projects API, then work items API | done |
-| 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | in progress |
+| 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | done |
 | 3 | Research agent | `POST /run` for Research | not started |
 | 4 | Approval and transition | `POST /advance` for Research → Definition | not started |
 | 5 | Minimal React UI | Research slice in the browser | not started |
@@ -917,13 +917,13 @@ Tasks:
 - [x] 2.2 `StageRun` model with `error` field
 - [x] 2.3 `Artifact` model linked to its run
 - [x] 2.4 Migration `0003`
-- [ ] 2.5 Persistence tests
+- [x] 2.5 Persistence tests
 
 Acceptance:
 
 - [x] AC2.1 A stage run can be stored.
 - [x] AC2.2 A run can have multiple artifacts.
-- [ ] AC2.3 Artifacts are linked to the correct run, and through it to the correct work item.
+- [x] AC2.3 Artifacts are linked to the correct run, and through it to the correct work item.
 
 ### Iteration 3 — Research agent vertical slice
 
