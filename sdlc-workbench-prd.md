@@ -931,7 +931,7 @@ Tasks:
 
 - [x] 3.1 `ModelRunner` protocol
 - [x] 3.2 Fake `ModelRunner` for tests
-- [ ] 3.3 One real provider implementation and its API key setting
+- [x] 3.3 One real provider implementation and its API key setting
 - [ ] 3.4 `StageDefinition` for `RESEARCH` in `config/`
 - [ ] 3.5 `ResearchAgent` instructions and prompt builder (§10)
 - [ ] 3.6 `run_stage` use case for `RESEARCH`
