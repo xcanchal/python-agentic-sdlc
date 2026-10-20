@@ -929,15 +929,15 @@ Acceptance:
 
 Tasks:
 
-- [ ] 3.1 `ModelRunner` protocol
-- [ ] 3.2 Fake `ModelRunner` for tests
+- [x] 3.1 `ModelRunner` protocol
+- [x] 3.2 Fake `ModelRunner` for tests
 - [ ] 3.3 One real provider implementation and its API key setting
 - [ ] 3.4 `StageDefinition` for `RESEARCH` in `config/`
 - [ ] 3.5 `ResearchAgent` instructions and prompt builder (§10)
 - [ ] 3.6 `run_stage` use case for `RESEARCH`
 - [ ] 3.7 `POST /work-items/{id}/run` returns the run with its artifacts
 - [ ] 3.8 Provider smoke test, excluded from the normal suite
-- [ ] 3.9 `ModelResult` with token usage, returned by every `ModelRunner`
+- [x] 3.9 `ModelResult` with token usage, returned by every `ModelRunner`
 - [ ] 3.10 Price table for each model in `config/`
 - [ ] 3.11 `StageRun` fields `input_tokens`, `output_tokens`, `cost_usd` and their migration
 
