@@ -939,7 +939,7 @@ Tasks:
 - [ ] 3.8 Provider smoke test, excluded from the normal suite
 - [x] 3.9 `ModelResult` with token usage, returned by every `ModelRunner`
 - [ ] 3.10 Price table for each model in `config/`
-- [ ] 3.11 `StageRun` fields `input_tokens`, `output_tokens`, `cost_usd` and their migration
+- [x] 3.11 `StageRun` fields `input_tokens`, `output_tokens`, `cost_usd` and their migration
 
 Acceptance:
 

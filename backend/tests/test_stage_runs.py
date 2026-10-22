@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from decimal import Decimal
 
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -27,6 +28,9 @@ class TestStageRun:
         assert stored_stage_run.stage == Stage.RESEARCH
         assert stored_stage_run.error is None
         assert stored_stage_run.completed_at is None
+        assert stored_stage_run.input_tokens is None
+        assert stored_stage_run.output_tokens is None
+        assert stored_stage_run.cost_usd is None
 
     async def test_failed_run_keeps_error(
         self, session: AsyncSession, work_item: WorkItem
@@ -52,6 +56,31 @@ class TestStageRun:
         assert stored_stage_run.status == StageRunStatus.FAILED
         assert stored_stage_run.error == "Provider timeout"
         assert stored_stage_run.completed_at == completed_at
+
+    async def test_completed_run_keeps_usage(
+        self, session: AsyncSession, work_item: WorkItem
+    ) -> None:
+        run = StageRun(
+            work_item_id=work_item.id,
+            stage=Stage.RESEARCH,
+            model="test-model",
+            status=StageRunStatus.COMPLETED,
+            input_tokens=3,
+            output_tokens=5,
+            cost_usd=Decimal("0.0000009"),
+            completed_at=datetime(2026, 1, 1, 12, 0, tzinfo=UTC),
+        )
+        session.add(run)
+        await session.commit()
+        run_id = run.id
+        session.expire_all()
+
+        stored_stage_run = await session.get(StageRun, run_id)
+
+        assert stored_stage_run is not None
+        assert stored_stage_run.input_tokens == 3
+        assert stored_stage_run.output_tokens == 5
+        assert stored_stage_run.cost_usd == Decimal("0.0000009")
 
     async def test_deleting_work_item_deletes_its_runs(
         self, session: AsyncSession, work_item: WorkItem

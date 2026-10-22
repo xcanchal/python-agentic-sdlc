@@ -1,6 +1,7 @@
 import enum
 import uuid
 from datetime import datetime
+from decimal import Decimal
 from typing import Annotated, Any, ClassVar
 
 from sqlalchemy import DateTime, ForeignKey, String, Text, func, text
@@ -75,6 +76,9 @@ class StageRun(Base):
         server_default=StageRunStatus.RUNNING.value
     )
     error: Mapped[str | None] = mapped_column(Text)
+    input_tokens: Mapped[int | None]
+    output_tokens: Mapped[int | None]
+    cost_usd: Mapped[Decimal | None]
     created_at: Mapped[CreatedAt]
     completed_at: Mapped[datetime | None]
 
