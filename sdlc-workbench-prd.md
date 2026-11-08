@@ -849,7 +849,7 @@ Tasks are numbered `<iteration>.<n>` and acceptance criteria `AC<iteration>.<n>`
 | --- | --- | --- | --- |
 | 1 | Backend skeleton | projects API, then work items API | done |
 | 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | done |
-| 3 | Research agent | `POST /run` for Research | not started |
+| 3 | Research agent | `POST /run` for Research | done (3.8 deferred) |
 | 4 | Approval and transition | `POST /advance` for Research → Definition | not started |
 | 5 | Minimal React UI | Research slice in the browser | not started |
 | 6 | Remaining agents | all stages through `DONE` | not started |
@@ -943,11 +943,11 @@ Tasks:
 
 Acceptance:
 
-- [ ] AC3.1 `POST /work-items/{id}/run` runs the Research stage.
-- [ ] AC3.2 A successful run stores a `RESEARCH_BRIEF`.
-- [ ] AC3.3 A failed provider call marks the run `FAILED` and sets `error`.
-- [ ] AC3.4 No other stage is implemented yet.
-- [ ] AC3.5 A completed run stores its token usage and cost.
+- [x] AC3.1 `POST /work-items/{id}/run` runs the Research stage.
+- [x] AC3.2 A successful run stores a `RESEARCH_BRIEF`.
+- [x] AC3.3 A failed provider call marks the run `FAILED` and sets `error`.
+- [x] AC3.4 No other stage is implemented yet.
+- [x] AC3.5 A completed run stores its token usage and cost.
 
 ### Iteration 4 — Approval and transition
 
