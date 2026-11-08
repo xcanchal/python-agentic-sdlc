@@ -934,7 +934,7 @@ Tasks:
 - [x] 3.3 One real provider implementation and its API key setting
 - [x] 3.4 `StageDefinition` for `RESEARCH` in `config/`
 - [x] 3.5 `ResearchAgent` instructions and prompt builder (§10)
-- [ ] 3.6 `run_stage` use case for `RESEARCH`
+- [x] 3.6 `run_stage` use case for `RESEARCH`
 - [ ] 3.7 `POST /work-items/{id}/run` returns the run with its artifacts
 - [ ] 3.8 Provider smoke test, excluded from the normal suite
 - [x] 3.9 `ModelResult` with token usage, returned by every `ModelRunner`
