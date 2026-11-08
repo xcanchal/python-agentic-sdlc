@@ -2,9 +2,14 @@ import uuid
 
 from fastapi import APIRouter, status
 
-from agentic_sdlc.api.dependencies import SessionDependency
-from agentic_sdlc.api.schemas import WorkItemCreateRequest, WorkItemResponse
+from agentic_sdlc.api.dependencies import ModelRunnerDependency, SessionDependency
+from agentic_sdlc.api.schemas import (
+    StageRunResponse,
+    WorkItemCreateRequest,
+    WorkItemResponse,
+)
 from agentic_sdlc.application import work_items
+from agentic_sdlc.application.run_stage import run_stage
 
 work_items_router = APIRouter(tags=["work-items"])
 
@@ -36,3 +41,15 @@ async def get_work_item(
 ) -> WorkItemResponse:
     work_item = await work_items.get_work_item(session, work_item_id)
     return WorkItemResponse.model_validate(work_item)
+
+
+@work_items_router.post(
+    "/work-items/{work_item_id}/run", status_code=status.HTTP_201_CREATED
+)
+async def run_work_item(
+    session: SessionDependency,
+    model_runner: ModelRunnerDependency,
+    work_item_id: uuid.UUID,
+) -> StageRunResponse | None:
+    stage_run = await run_stage(session, work_item_id=work_item_id, runner=model_runner)
+    return StageRunResponse.model_validate(stage_run)

@@ -4,12 +4,21 @@ from datetime import datetime
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from agentic_sdlc.domain.enums import Stage, WorkItemStatus
+from agentic_sdlc.api.dependencies import get_model_runner
+from agentic_sdlc.application.model_runner import ModelRunnerError
+from agentic_sdlc.domain.enums import (
+    ArtifactKind,
+    Stage,
+    StageRunStatus,
+    WorkItemStatus,
+)
 from agentic_sdlc.domain.limits import (
     WORK_ITEM_DESCRIPTION_MAX_LENGTH,
     WORK_ITEM_TITLE_MAX_LENGTH,
 )
 from agentic_sdlc.infrastructure.database.models import Project, WorkItem
+from agentic_sdlc.main import app
+from tests.fakes import FakeModelRunner
 
 
 async def add_work_item(
@@ -189,3 +198,46 @@ class TestGetWorkItem:
         response = await client.get("/work-items/not-a-uuid")
 
         assert response.status_code == 422
+
+
+class TestRunWorkItem:
+    async def test_returns_the_completed_run_with_its_artifact(
+        self, client: AsyncClient, work_item: WorkItem
+    ) -> None:
+        app.dependency_overrides[get_model_runner] = lambda: FakeModelRunner()
+
+        response = await client.post(f"/work-items/{work_item.id}/run")
+
+        assert response.status_code == 201
+        body = response.json()
+        assert body["work_item_id"] == str(work_item.id)
+        assert body["stage"] == Stage.RESEARCH
+        assert body["status"] == StageRunStatus.COMPLETED
+        assert body["error"] is None
+        assert body["cost_usd"] == "0.0022"
+        assert [(a["kind"], a["content"]) for a in body["artifacts"]] == [
+            (ArtifactKind.RESEARCH_BRIEF, "# Research brief")
+        ]
+        assert body["artifacts"][0]["stage_run_id"] == body["id"]
+
+    async def test_returns_the_failed_run_when_provider_fails(
+        self, client: AsyncClient, work_item: WorkItem
+    ) -> None:
+        app.dependency_overrides[get_model_runner] = lambda: FakeModelRunner(
+            error=ModelRunnerError("boom")
+        )
+
+        response = await client.post(f"/work-items/{work_item.id}/run")
+
+        assert response.status_code == 201
+        body = response.json()
+        assert body["status"] == StageRunStatus.FAILED
+        assert body["error"] == "boom"
+        assert body["artifacts"] == []
+
+    async def test_returns_404_when_unknown(self, client: AsyncClient) -> None:
+        app.dependency_overrides[get_model_runner] = lambda: FakeModelRunner()
+
+        response = await client.post(f"/work-items/{uuid.uuid4()}/run")
+
+        assert response.status_code == 404

@@ -6,7 +6,7 @@ from typing import Annotated, Any, ClassVar
 
 from sqlalchemy import DateTime, ForeignKey, String, Text, func, text
 from sqlalchemy import Enum as SAEnum
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 from agentic_sdlc.domain.enums import (
     ArtifactKind,
@@ -81,6 +81,7 @@ class StageRun(Base):
     cost_usd: Mapped[Decimal | None]
     created_at: Mapped[CreatedAt]
     completed_at: Mapped[datetime | None]
+    artifacts: Mapped[list["Artifact"]] = relationship(passive_deletes=True)
 
 
 class Artifact(Base):

@@ -25,6 +25,7 @@ async def run_stage(
         stage=Stage.RESEARCH,
         model=RESEARCH_AGENT.model,
         status=StageRunStatus.RUNNING,
+        artifacts=[],
     )
 
     session.add(stage_run)
@@ -51,12 +52,9 @@ async def run_stage(
             output_tokens=model_result.output_tokens,
         )
 
-        artifact = Artifact(
-            stage_run_id=stage_run.id,
-            kind=ArtifactKind.RESEARCH_BRIEF,
-            content=model_result.text,
+        stage_run.artifacts.append(
+            Artifact(kind=ArtifactKind.RESEARCH_BRIEF, content=model_result.text)
         )
-        session.add(artifact)
 
     stage_run.completed_at = datetime.now(UTC)
     await session.commit()
