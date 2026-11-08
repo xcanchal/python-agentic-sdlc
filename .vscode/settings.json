@@ -2,6 +2,7 @@
     "editor.inlineSuggest.enabled": false,
     "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/bin/python",
     "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.autoImportCompletions": true,
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
