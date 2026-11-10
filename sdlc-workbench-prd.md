@@ -850,7 +850,7 @@ Tasks are numbered `<iteration>.<n>` and acceptance criteria `AC<iteration>.<n>`
 | 1 | Backend skeleton | projects API, then work items API | done |
 | 2 | Artifacts and stage runs | `StageRun` and `Artifact` persistence | done |
 | 3 | Research agent | `POST /run` for Research | done (3.8 deferred) |
-| 4 | Approval and transition | `POST /advance` for Research → Definition | not started |
+| 4 | Approval and transition | `POST /advance` for Research → Definition | in progress (4.1 done) |
 | 5 | Minimal React UI | Research slice in the browser | not started |
 | 6 | Remaining agents | all stages through `DONE` | not started |
 | 7 | History and polish | run and artifact history | not started |
@@ -953,7 +953,7 @@ Acceptance:
 
 Tasks:
 
-- [ ] 4.1 Stage order and next-stage rule in `domain/`
+- [x] 4.1 Stage order and next-stage rule in `domain/`
 - [ ] 4.2 `advance_work_item` use case
 - [ ] 4.3 `POST /work-items/{id}/advance`
 - [ ] 4.4 409 mapping for invalid transitions
